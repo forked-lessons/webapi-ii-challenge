@@ -52,4 +52,20 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const post = await db.update(req.params.id, req.body);
+    if (post) {
+      res.status(200).json(post);
+    } else {
+      res.status(404).json({ message: "the post could not be found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "There was an error while getting the posts." });
+  }
+});
+
 module.exports = router;
